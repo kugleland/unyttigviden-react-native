@@ -1,14 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
+
+import { Box } from "@/components/ui/box"
+import { Text } from "@/components/ui/text"
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Box className="bg-primary-500 p-5">
+        <Text className="text-typography-0">This is the Box</Text>
+      </Box>
     </View>
   );
 }
