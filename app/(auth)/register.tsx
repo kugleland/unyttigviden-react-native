@@ -16,6 +16,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { Icon } from "@/components/ui/icon";
 import { PersonStanding } from "lucide-react-native";
+import { Card } from "@/components/ui/card";
 import {
   FormControl,
   FormControlError,
@@ -41,6 +42,8 @@ const RegisterScreen = () => {
   const navigation = useNavigation();
   const clearError = useAuthStore((state) => state.clearError);
   const errors = useAuthStore((state) => state.errors);
+  const message = useAuthStore((state) => state.message);
+  const router = useRouter();
 
   const register = useAuthStore((state) => state.register);
   const handleRegister = () => {
@@ -60,8 +63,172 @@ const RegisterScreen = () => {
   );
 
   return (
-    <VStack>
-      <Text>Register</Text>
+    <VStack className="w-full rounded-md border border-background-200 p-4">
+      <Card size="md" variant="elevated" className="">
+        <Box className="items-center justify-center py-3">
+          {/* <Box className="items-center justify-center h-24 w-24 rounded-full border mb-6">
+          <PersonStanding size={50} color="black" />
+        </Box> */}
+          <Text style={styles.title}>Velkommen til Unyttig Viden</Text>
+        </Box>
+        <Box className="pb-3">
+          <FormControl
+            isInvalid={errors.name}
+            size="md"
+            isDisabled={false}
+            isReadOnly={false}
+            isRequired={false}
+          >
+            <FormControlLabel>
+              <FormControlLabelText>Navn</FormControlLabelText>
+            </FormControlLabel>
+            <Input className="my-1" size="md">
+              <InputField
+                type="text"
+                placeholder="Navn"
+                value={name}
+                onChangeText={(text) => setName(text)}
+              />
+            </Input>
+
+            {errors.name &&
+              errors.name.map((err: string) => {
+                return (
+                  <FormControlError key={err}>
+                    <FormControlErrorIcon as={AlertCircleIcon} />
+                    <FormControlErrorText>{err}</FormControlErrorText>
+                  </FormControlError>
+                );
+              })}
+          </FormControl>
+        </Box>
+        <Box className="py-3">
+          <FormControl
+            isInvalid={errors.email}
+            size="md"
+            isDisabled={false}
+            isReadOnly={false}
+            isRequired={false}
+          >
+            <FormControlLabel>
+              <FormControlLabelText>E-mail</FormControlLabelText>
+            </FormControlLabel>
+            <Input className="my-1" size="md">
+              <InputField
+                type="text"
+                placeholder="E-mail"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+              />
+            </Input>
+
+            {errors.email &&
+              errors.email.map((err: string) => {
+                return (
+                  <FormControlError key={err}>
+                    <FormControlErrorIcon as={AlertCircleIcon} />
+                    <FormControlErrorText>{err}</FormControlErrorText>
+                  </FormControlError>
+                );
+              })}
+          </FormControl>
+        </Box>
+
+        <Box className="py-3">
+          <FormControl
+            isInvalid={errors.password}
+            size="md"
+            isDisabled={false}
+            isReadOnly={false}
+            isRequired={false}
+          >
+            <FormControlLabel>
+              <FormControlLabelText>Adgangskode</FormControlLabelText>
+            </FormControlLabel>
+            <Input className="my-1" size="md">
+              <InputField
+                type="password"
+                placeholder="Adgangskode"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+              />
+            </Input>
+
+            {errors.password &&
+              errors.password.map((err: string) => {
+                return (
+                  <FormControlError key={err}>
+                    <FormControlErrorIcon as={AlertCircleIcon} />
+                    <FormControlErrorText>{err}</FormControlErrorText>
+                  </FormControlError>
+                );
+              })}
+          </FormControl>
+        </Box>
+
+        <Box className="py-3">
+          <FormControl
+            isInvalid={errors.password_confirmation}
+            size="md"
+            isDisabled={false}
+            isReadOnly={false}
+            isRequired={false}
+          >
+            <FormControlLabel>
+              <FormControlLabelText>Bekræft adgangskode</FormControlLabelText>
+            </FormControlLabel>
+            <Input className="my-1" size="md">
+              <InputField
+                type="password"
+                placeholder="Bekræft adgangskode"
+                value={confirmPassword}
+                onChangeText={(text) => setConfirmPassword(text)}
+              />
+            </Input>
+
+            {errors.password_confirmation &&
+              errors.password_confirmation.map((err: string) => {
+                return (
+                  <FormControlError key={err}>
+                    <FormControlErrorIcon as={AlertCircleIcon} />
+                    <FormControlErrorText>{err}</FormControlErrorText>
+                  </FormControlError>
+                );
+              })}
+          </FormControl>
+        </Box>
+
+        {message && (
+          <Box className="bg-red-500 text-white p-2 rounded-md">
+            <Text className="text-center text-white">{message}</Text>
+          </Box>
+        )}
+
+        <Button
+          className="w-full self-end mt-4"
+          size="lg"
+          onPress={handleRegister}
+        >
+          <ButtonText>Opret konto</ButtonText>
+        </Button>
+      </Card>
+
+      <Box className="mt-6 flex flex-col gap-3 p-3">
+        <Button
+          onPress={() => router.push("/(auth)/login")}
+          variant="outline"
+          size="md"
+        >
+          <ButtonText>Har du allerede en konto? Log ind</ButtonText>
+        </Button>
+
+        <Button
+          onPress={() => router.push("/(auth)/forgot-password")}
+          variant="outline"
+        >
+          <ButtonText>Glemt adgangskode?</ButtonText>
+        </Button>
+      </Box>
     </VStack>
   );
 };

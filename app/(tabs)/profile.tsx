@@ -4,8 +4,19 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import useAuthStore from "@/store/auth/useAuthStore";
 import { useEffect } from "react";
+import { router } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Redirect, useRouter } from "expo-router";
+
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallbackText,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
+import { Box } from "@/components/ui/box";
+import { Heading } from "@/components/ui/heading";
 export default function ProfileScreen() {
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
@@ -16,41 +27,40 @@ export default function ProfileScreen() {
   //   console.log(user);
   // }, [token, user]);
 
-  if (!token) {
-    return <Redirect href="/(auth)/login" />;
-  }
-
   return (
-    <View className="flex-1 items-center justify-center">
-      <View className="flex-1 items-center justify-center">
-        <Text style={styles.title}>{user?.name}</Text>
+    <Box className="flex-1 items-center justify-center p-3">
+      <Card className="items-center justify-center p-6 mb-6 w-full">
+        <Avatar size="lg" className="mb-3">
+          {user?.profile_image_url ? (
+            <AvatarImage
+              source={{
+                uri: user.profile_image_url,
+              }}
+            />
+          ) : (
+            <AvatarFallbackText>{user?.name}</AvatarFallbackText>
+          )}
+          <AvatarBadge />
+        </Avatar>
+        <Heading size="md" className="mb-1">
+          {user?.name}
+        </Heading>
+        <Text>{user?.email}</Text>
+      </Card>
 
+      {token ? (
         <Button
           onPress={() => {
             logout();
           }}
-          style={{ marginTop: 20 }}
         >
           <ButtonText>Logout</ButtonText>
         </Button>
-      </View>
-    </View>
+      ) : (
+        <Button onPress={() => router.push("/(auth)/login")}>
+          <ButtonText>Login</ButtonText>
+        </Button>
+      )}
+    </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

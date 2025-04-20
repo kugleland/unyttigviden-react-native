@@ -6,13 +6,19 @@ import { Pressable } from "react-native";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import {
+  BookmarkIcon,
+  HomeIcon,
+  UserIcon,
+  CircleHelp,
+} from "lucide-react-native";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={24} style={{ marginBottom: -10 }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -25,13 +31,16 @@ export default function TabLayout() {
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
+        // tabBarShowLabel: false,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <HomeIcon color={color} style={{ marginBottom: 5 }} />
+          ),
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -49,11 +58,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="(facts)"
         options={{
           title: "Viden",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="question" color={color} />
+            <CircleHelp color={color} style={{ marginBottom: 5 }} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="bookmarks"
+        options={{
+          title: "Bookmarks",
+          tabBarIcon: ({ color }) => (
+            <BookmarkIcon color={color} style={{ marginBottom: 5 }} />
           ),
         }}
       />
@@ -61,7 +79,9 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <UserIcon color={color} style={{ marginBottom: 5 }} />
+          ),
         }}
       />
     </Tabs>

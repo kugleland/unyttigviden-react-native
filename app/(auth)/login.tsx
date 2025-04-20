@@ -30,6 +30,7 @@ import { Input, InputField } from "@/components/ui/input";
 import { VStack } from "@/components/ui/vstack";
 import { AlertCircleIcon } from "@/components/ui/icon";
 import { Stack, useRouter } from "expo-router";
+import { Card } from "@/components/ui/card";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +51,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (token) {
-      router.push("/(tabs)/profile");
+      router.dismissAll();
     }
   }, [token]);
 
@@ -63,99 +64,101 @@ const LoginScreen = () => {
   return (
     <>
       <VStack className="w-full rounded-md border border-background-200 p-4">
-        <Box className="items-center justify-center">
-          <Box className="items-center justify-center h-24 w-24 rounded-full border mb-6">
-            <PersonStanding size={50} color="black" />
+        <Card size="md" variant="elevated" className="">
+          <Box className="items-center justify-center">
+            <Box className="items-center justify-center h-24 w-24 rounded-full border mb-6">
+              <PersonStanding size={50} color="black" />
+            </Box>
+            <Text style={styles.title}>Welcome Back</Text>
           </Box>
-          <Text style={styles.title}>Welcome Back</Text>
-        </Box>
-        <Box className="py-3">
-          <FormControl
-            isInvalid={errors.email}
-            size="md"
-            isDisabled={false}
-            isReadOnly={false}
-            isRequired={false}
-          >
-            <FormControlLabel>
-              <FormControlLabelText>E-mail</FormControlLabelText>
-            </FormControlLabel>
-            <Input className="my-1" size="md">
-              <InputField
-                type="text"
-                placeholder="E-mail"
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-              />
-            </Input>
-            {/* <FormControlHelper>
+          <Box className="py-3">
+            <FormControl
+              isInvalid={errors.email}
+              size="md"
+              isDisabled={false}
+              isReadOnly={false}
+              isRequired={false}
+            >
+              <FormControlLabel>
+                <FormControlLabelText>E-mail</FormControlLabelText>
+              </FormControlLabel>
+              <Input className="my-1" size="md">
+                <InputField
+                  type="text"
+                  placeholder="E-mail"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                />
+              </Input>
+              {/* <FormControlHelper>
           <FormControlHelperText>
             Must be atleast 6 characters.
           </FormControlHelperText>
         </FormControlHelper> */}
 
-            {errors.email &&
-              errors.email.map((err: string) => {
-                return (
-                  <FormControlError key={err}>
-                    <FormControlErrorIcon as={AlertCircleIcon} />
-                    <FormControlErrorText>{err}</FormControlErrorText>
-                  </FormControlError>
-                );
-              })}
-          </FormControl>
-        </Box>
+              {errors.email &&
+                errors.email.map((err: string) => {
+                  return (
+                    <FormControlError key={err}>
+                      <FormControlErrorIcon as={AlertCircleIcon} />
+                      <FormControlErrorText>{err}</FormControlErrorText>
+                    </FormControlError>
+                  );
+                })}
+            </FormControl>
+          </Box>
 
-        <Box className="py-3">
-          <FormControl
-            isInvalid={errors.password}
-            size="md"
-            isDisabled={false}
-            isReadOnly={false}
-            isRequired={false}
-          >
-            <FormControlLabel>
-              <FormControlLabelText>Adgangskode</FormControlLabelText>
-            </FormControlLabel>
-            <Input className="my-1" size="md">
-              <InputField
-                type="password"
-                placeholder="Adgangskode"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-              />
-            </Input>
-            {/* <FormControlHelper>
+          <Box className="py-3">
+            <FormControl
+              isInvalid={errors.password}
+              size="md"
+              isDisabled={false}
+              isReadOnly={false}
+              isRequired={false}
+            >
+              <FormControlLabel>
+                <FormControlLabelText>Adgangskode</FormControlLabelText>
+              </FormControlLabel>
+              <Input className="my-1" size="md">
+                <InputField
+                  type="password"
+                  placeholder="Adgangskode"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                />
+              </Input>
+              {/* <FormControlHelper>
           <FormControlHelperText>
             Must be atleast 6 characters.
           </FormControlHelperText>
         </FormControlHelper> */}
 
-            {errors.password &&
-              errors.password.map((err: string) => {
-                return (
-                  <FormControlError key={err}>
-                    <FormControlErrorIcon as={AlertCircleIcon} />
-                    <FormControlErrorText>{err}</FormControlErrorText>
-                  </FormControlError>
-                );
-              })}
-          </FormControl>
-        </Box>
+              {errors.password &&
+                errors.password.map((err: string) => {
+                  return (
+                    <FormControlError key={err}>
+                      <FormControlErrorIcon as={AlertCircleIcon} />
+                      <FormControlErrorText>{err}</FormControlErrorText>
+                    </FormControlError>
+                  );
+                })}
+            </FormControl>
+          </Box>
 
-        {message && (
-          <View className="bg-red-500 text-white p-2 rounded-md">
-            <Text>{message}</Text>
-          </View>
-        )}
+          {message && (
+            <Box className="bg-red-500 text-white p-2 rounded-md">
+              <Text className="text-center text-white">{message}</Text>
+            </Box>
+          )}
 
-        <Button
-          className="w-full self-end mt-4"
-          size="lg"
-          onPress={handleLogin}
-        >
-          <ButtonText>Log ind</ButtonText>
-        </Button>
+          <Button
+            className="w-full self-end mt-4"
+            size="lg"
+            onPress={handleLogin}
+          >
+            <ButtonText>Log ind</ButtonText>
+          </Button>
+        </Card>
 
         <Box className="mt-6 flex flex-col gap-3">
           <Button

@@ -4,6 +4,7 @@ export interface User {
   name: string;
   gravatar: string;
   profile_photo_url: string;
+  profile_image_url: string;
 }
 
 export interface RegisterData {

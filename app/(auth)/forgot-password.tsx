@@ -29,6 +29,7 @@ import { Input, InputField } from "@/components/ui/input";
 import { VStack } from "@/components/ui/vstack";
 import { AlertCircleIcon } from "@/components/ui/icon";
 import { useRouter } from "expo-router";
+import { Card } from "@/components/ui/card";
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +39,8 @@ const ForgotPasswordScreen = () => {
   const forgotPassword = useAuthStore((state) => state.forgotPassword);
   const clearError = useAuthStore((state) => state.clearError);
   const [resetLinkSent, setResetLinkSent] = useState(false);
+  const router = useRouter();
+
   const handleResetPassword = async () => {
     const result = await forgotPassword({ email });
     if (status === 200) {
@@ -46,9 +49,86 @@ const ForgotPasswordScreen = () => {
   };
 
   return (
-    <VStack>
-      <Text>Glemt adgangskode</Text>
-      <Text>Indtast din e-mail for at få adgangskoden tilbage</Text>
+    <VStack className="w-full rounded-md border border-background-200 p-4">
+      <Card size="md" variant="elevated" className="">
+        <Box className="items-center justify-center">
+          <Box className="items-center justify-center h-24 w-24 rounded-full border mb-6">
+            <PersonStanding size={50} color="black" />
+          </Box>
+          <Text style={styles.title}>Welcome Back</Text>
+        </Box>
+        <Box className="items-center justify-center">
+          <Text style={styles.title}>Glemt adgangskode?</Text>
+        </Box>
+
+        <Box className="items-center justify-center">
+          <Text style={styles.description}>
+            Indtast din e-mail adresse og vi sender dig instruktioner til at
+            nulstille din adgangskode.
+          </Text>
+        </Box>
+
+        {message && <Text style={styles.statusMessage}>{message}</Text>}
+
+        <Box className="py-3">
+          <FormControl
+            isInvalid={errors.email}
+            size="md"
+            isDisabled={false}
+            isReadOnly={false}
+            isRequired={false}
+          >
+            <FormControlLabel>
+              <FormControlLabelText>E-mail</FormControlLabelText>
+            </FormControlLabel>
+            <Input className="my-1" size="md">
+              <InputField
+                type="text"
+                placeholder="E-mail"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+              />
+            </Input>
+
+            {errors.email &&
+              errors.email.map((err: string) => {
+                return (
+                  <FormControlError key={err}>
+                    <FormControlErrorIcon as={AlertCircleIcon} />
+                    <FormControlErrorText>{err}</FormControlErrorText>
+                  </FormControlError>
+                );
+              })}
+          </FormControl>
+        </Box>
+
+        {message && (
+          <Box className="bg-red-500 text-white p-2 rounded-md">
+            <Text className="text-center text-white">{message}</Text>
+          </Box>
+        )}
+
+        <Button
+          className="w-full self-end mt-4"
+          size="lg"
+          onPress={handleResetPassword}
+        >
+          <ButtonText>Nulstil adgangskode</ButtonText>
+        </Button>
+      </Card>
+
+      <Box className="mt-6 flex flex-col gap-3">
+        <Button onPress={() => router.push("/(auth)/login")} variant="outline">
+          <ButtonText>Kommet i tanke om adgangskode? Log ind</ButtonText>
+        </Button>
+
+        <Button
+          onPress={() => router.push("/(auth)/register")}
+          variant="outline"
+        >
+          <ButtonText>Opret konto</ButtonText>
+        </Button>
+      </Box>
     </VStack>
   );
 };

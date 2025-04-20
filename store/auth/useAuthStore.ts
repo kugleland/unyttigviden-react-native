@@ -151,7 +151,7 @@ const useAuthStore = create<AuthState>()(
         
       },
 
-      clearError: () => set({ error: null, errors: [] }),
+      clearError: () => set({ error: null, errors: [], message: null }),
     }),
     {
       name: 'auth-storage',
