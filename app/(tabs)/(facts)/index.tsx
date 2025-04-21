@@ -11,7 +11,7 @@ import {
 import { useFactStore } from "@/store/useFactStore";
 
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
+import { Stack, useNavigation, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
@@ -23,10 +23,9 @@ import { useFocusEffect } from "expo-router";
 import { useCallback } from "react";
 const CategoriesScreen = () => {
   const router = useRouter();
+  const navigation = useNavigation();
   const categories = useFactStore((state: any) => state.categories);
   const getCategories = useFactStore((state: any) => state.getCategories);
-
-  const [searchModalVisible, setSearchModalVisible] = useState(false);
 
   useEffect(() => {
     getCategories();
@@ -44,8 +43,18 @@ const CategoriesScreen = () => {
       <TouchableOpacity
         className="flex-1 h-48 m-1 rounded-lg overflow-hidden"
         onPress={() =>
-          //router.navigate("CategoryShowScreen", { category: item })
-          console.log(item)
+          //   router.push({
+          //     pathname: "/(tabs)/(facts)/show-category",
+          //     params: {
+          //       categoryId: item.id,
+          //     },
+          //   })
+          router.push({
+            pathname: "/(tabs)/(facts)/show-category",
+            params: {
+              categoryId: item.id,
+            },
+          })
         }
       >
         <LinearGradient
@@ -88,24 +97,14 @@ const CategoriesScreen = () => {
   };
 
   return (
-    <Box className="flex-1">
-      {/* {searchModalVisible && (
-        <View style={{ flex: 1, backgroundColor: "white", padding: 10 }}>
-          <TextInput
-            placeholder="Search"
-            style={{ flex: 1, backgroundColor: "white" }}
-          />
-          <Button mode="contained" onPress={() => setSearchModalVisible(false)}>
-            Close
-          </Button>
-        </View>
-      )} */}
-      {!searchModalVisible && (
+    <>
+      <Stack.Screen options={{ title: "Viden" }} />
+      <Box className="flex-1">
         <Box className="flex-1 bg-white p-1">
           <FlatList data={categories} renderItem={renderItem} numColumns={2} />
         </Box>
-      )}
-    </Box>
+      </Box>
+    </>
   );
 };
 

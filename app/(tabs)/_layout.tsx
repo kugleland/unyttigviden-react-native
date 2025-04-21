@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
+import { Link, router, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 
 import Colors from "@/constants/Colors";
@@ -11,7 +11,9 @@ import {
   HomeIcon,
   UserIcon,
   CircleHelp,
+  ArrowLeftIcon,
 } from "lucide-react-native";
+import { Button } from "@/components/ui/button";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -61,9 +63,23 @@ export default function TabLayout() {
         name="(facts)"
         options={{
           title: "Viden",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <CircleHelp color={color} style={{ marginBottom: 5 }} />
           ),
+          // headerLeft: () => (
+          //   <Button onPress={() => router.back()} className="ml-3">
+          //     <ArrowLeftIcon size={24} color="white" />
+          //   </Button>
+          // ),
+          // headerRight: () => (
+          //   <Button
+          //     onPress={() => router.navigate("/fact-search")}
+          //     className="mr-3"
+          //   >
+          //     <SearchIcon size={24} color="white" />
+          //   </Button>
+          // ),
         }}
       />
       <Tabs.Screen

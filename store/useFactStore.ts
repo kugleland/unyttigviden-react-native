@@ -17,6 +17,7 @@ export const useFactStore = create((set) => ({
   status: null,
   message: null,    
   getCategories: async () => {  
+    set({ facts: [], category: {} as Category });
     try {
       const response = await api.get('/categories');
       set({ categories: response.data.data });
@@ -82,7 +83,7 @@ export const useFactStore = create((set) => ({
           set({ isLoading: true });
     try { 
       const response = await api.get(`/categories/${categoryId}`);
-      set({ category: response.data.data });
+      set({ category: response.data.data, facts: response.data.data.facts });
     } catch (error) {
       set({ error: error });
     } finally {
