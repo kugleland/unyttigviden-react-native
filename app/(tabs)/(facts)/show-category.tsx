@@ -104,7 +104,12 @@ const CategoryShowScreen = ({ route }: { route: any }) => {
             </View>
           </PagerView>
         ) : (
-          <Text>Ingen facts i denne kategori</Text>
+          <View style={styles.page}>
+            <Text>Ingen facts i denne kategori</Text>
+            <Button onPress={() => router.back()} style={{ marginTop: 20 }}>
+              <ButtonText>Vælg en ny kategori</ButtonText>
+            </Button>
+          </View>
         )}
 
         {facts.length > 1 && (

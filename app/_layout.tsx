@@ -81,6 +81,10 @@ function RootLayoutNav() {
             name="(auth)"
             options={{ headerShown: false, presentation: "modal" }}
           />
+          <Stack.Screen
+            name="login-needed"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
         </Stack>
       </ThemeProvider>
     </GluestackUIProvider>

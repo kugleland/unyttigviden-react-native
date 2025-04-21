@@ -15,7 +15,8 @@ export const useFactStore = create((set) => ({
   isLoading: false,
   error: null,
   status: null,
-  message: null,    
+  message: null,
+  bookmarks: [],
   getCategories: async () => {  
     set({ facts: [], category: {} as Category });
     try {
@@ -84,6 +85,16 @@ export const useFactStore = create((set) => ({
     try { 
       const response = await api.get(`/categories/${categoryId}`);
       set({ category: response.data.data, facts: response.data.data.facts });
+    } catch (error) {
+      set({ error: error });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+  getBookmarks: async () => {
+    try {
+      const response = await api.get("/bookmarks");
+      set({ bookmarks: response.data.data });
     } catch (error) {
       set({ error: error });
     } finally {
