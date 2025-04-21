@@ -74,7 +74,7 @@ const CategoryShowScreen = ({ route }: { route: any }) => {
     <>
       <Stack.Screen options={{ title: category.title }} />
       <View className="flex-1">
-        <Box className="p-4 justify-center items-center">
+        <Box className="p-3 justify-center items-center">
           <Image
             source={{ uri: category.image_url }}
             style={{ width: "100%", height: 50 }}

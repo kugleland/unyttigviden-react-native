@@ -13,7 +13,9 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
-
+import { Button } from "@/components/ui/button";
+import { useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -57,13 +59,24 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-
+  const router = useRouter();
   return (
     <GluestackUIProvider mode="light">
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          <Stack.Screen
+            name="show-fact"
+            options={{
+              presentation: "modal",
+              headerShown: true,
+              headerLeft: () => (
+                <Button onPress={() => router.back()}>
+                  <ArrowLeft color="white" />
+                </Button>
+              ),
+            }}
+          />
           <Stack.Screen
             name="(auth)"
             options={{ headerShown: false, presentation: "modal" }}

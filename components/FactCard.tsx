@@ -34,9 +34,6 @@ const FactCard = ({ fact }: { fact: Fact }) => {
     fact.user_bookmark
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const router = useRouter();
 
   const upvoteFact = useFactStore((state: any) => state.upvoteFact);
@@ -44,11 +41,7 @@ const FactCard = ({ fact }: { fact: Fact }) => {
   const bookmarkFact = useFactStore((state: any) => state.bookmarkFact);
   const handleUpvote = async (factId: string) => {
     try {
-      // const data = await upvoteFact(factId);
       await upvoteFact(factId);
-      // Update UI based on the response
-      // For example, update the fact's vote count locally if needed
-      // console.log('handleUpvote', data);
       setVoteStatus("upvoted");
     } catch (err) {
       console.error("Failed to upvote fact:", err);
@@ -59,7 +52,6 @@ const FactCard = ({ fact }: { fact: Fact }) => {
     try {
       await downvoteFact(factId);
       setVoteStatus("downvoted");
-      // Update UI based on the response
     } catch (err) {
       console.error("Failed to downvote fact:", err);
     }
@@ -68,7 +60,6 @@ const FactCard = ({ fact }: { fact: Fact }) => {
   const handleUnvote = async (factId: string) => {
     try {
       setVoteStatus(null);
-      // Update UI based on the response
     } catch (err) {
       console.error("Failed to unvote fact:", err);
     }
@@ -78,7 +69,6 @@ const FactCard = ({ fact }: { fact: Fact }) => {
     try {
       await bookmarkFact(factId);
       setBookmarkStatus(!bookmarkStatus);
-      // Update UI based on the response
     } catch (err) {
       console.error("Failed to toggle bookmark on fact:", err);
     }
