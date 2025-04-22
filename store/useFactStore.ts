@@ -101,4 +101,15 @@ export const useFactStore = create((set) => ({
       set({ isLoading: false });
     }
   },
+  getAllFacts: async () => {
+    set({ isLoading: true });
+    try { 
+      const response = await api.get(`/categories/all`);
+      set({ category: response.data.data, facts: response.data.data.facts });
+    } catch (error) {
+      set({ error: error });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 }));

@@ -54,13 +54,14 @@ const DailyFact = () => {
               category_image_url: dailyFact.category_image_url,
               user_vote: dailyFact.user_vote,
               user_bookmark: dailyFact.user_bookmark,
+              color: dailyFact.color,
             },
           });
         }}
       >
         <LinearGradient
           // Background Linear Gradient
-          colors={["#c27aff", "#dab2ff"]} // #dab2ff
+          colors={["#c084fc", "#d8b4fe"]} // #dab2ff
           style={styles.background}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 1 }}
@@ -68,14 +69,20 @@ const DailyFact = () => {
           className=""
         >
           <Card className="bg-transparent">
-            <Heading>Dagens Fact</Heading>
-            {dailyFact.category_image_url && (
-              <Image
-                source={{ uri: dailyFact.category_image_url }}
-                style={{ width: "100%", height: 50 }}
-                contentFit="contain"
-              />
-            )}
+            <Box className="flex-row justify-start items-center pb-3 gap-3 px-3">
+              <Box className="bg-white rounded-full p-2 w-12 h-12">
+                {dailyFact.category_image_url && (
+                  <Image
+                    source={{ uri: dailyFact.category_image_url }}
+                    style={{ width: 30, height: 30 }}
+                    contentFit="contain"
+                  />
+                )}
+              </Box>
+              <Heading className="text-white ml-1" size="lg">
+                Dagens Fact
+              </Heading>
+            </Box>
             <Box>
               {/* <Text>{dailyFact.content}</Text> */}
               <View style={{ paddingTop: 10 }}>

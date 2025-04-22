@@ -38,10 +38,56 @@ const CategoriesScreen = () => {
     }, [])
   );
 
+  const AllCategories = () => {
+    return (
+      <TouchableOpacity
+        className=" h-48 shadow-sm rounded-lg overflow-hidden mx-3   mt-3"
+        onPress={() =>
+          router.push({
+            pathname: "/(tabs)/(facts)/show-category",
+            params: {
+              categoryId: "all",
+            },
+          })
+        }
+      >
+        <LinearGradient
+          // Background Linear Gradient
+          colors={["#60a5fa", "#93c5fd"]}
+          className="w-full h-full"
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 1 }}
+          locations={[0, 1]}
+        >
+          <Card className="w-full h-full bg-transparent justify-center items-center">
+            <Box className="justify-center items-center mb-4">
+              <Image
+                source={require("@/assets/images/logo-wide.png")}
+                style={{ width: 150, height: 50 }}
+                contentFit="contain"
+              />
+            </Box>
+            <Text
+              className="text-title-small font-medium text-center text-white"
+              style={{
+                fontWeight: "medium",
+                width: "100%",
+                textAlign: "center",
+                color: "white",
+              }}
+            >
+              Alle kategorier
+            </Text>
+          </Card>
+        </LinearGradient>
+      </TouchableOpacity>
+    );
+  };
+
   const renderItem = ({ item }: { item: any }) => {
     return (
       <TouchableOpacity
-        className="flex-1 h-48 m-1 rounded-lg overflow-hidden"
+        className="flex-1 h-48 m-1 shadow-sm rounded-lg overflow-hidden"
         onPress={() =>
           //   router.push({
           //     pathname: "/(tabs)/(facts)/show-category",
@@ -100,8 +146,16 @@ const CategoriesScreen = () => {
     <>
       <Stack.Screen options={{ title: "Viden" }} />
       <Box className="flex-1">
-        <Box className="flex-1 bg-white p-1">
-          <FlatList data={categories} renderItem={renderItem} numColumns={2} />
+        <Box className="border-b border-gray-200 px-1 pb-3 bg-white">
+          <AllCategories />
+        </Box>
+        <Box className="flex-1 bg-white px-3">
+          <FlatList
+            data={categories}
+            renderItem={renderItem}
+            numColumns={2}
+            className="pt-3"
+          />
         </Box>
       </Box>
     </>

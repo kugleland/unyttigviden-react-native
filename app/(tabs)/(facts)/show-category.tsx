@@ -36,8 +36,13 @@ const CategoryShowScreen = ({ route }: { route: any }) => {
   const { categoryId } = params;
 
   const getCategory = useFactStore((state: any) => state.getCategory);
+  const getAllFacts = useFactStore((state: any) => state.getAllFacts);
   useEffect(() => {
-    getCategory(categoryId);
+    if (categoryId == "all") {
+      getAllFacts();
+    } else {
+      getCategory(categoryId);
+    }
   }, []);
 
   const category: Category = useFactStore((state: any) => state.category);
@@ -74,7 +79,7 @@ const CategoryShowScreen = ({ route }: { route: any }) => {
     <>
       <Stack.Screen options={{ title: category.title }} />
       <View className="flex-1">
-        <Box className="p-3 justify-center items-center">
+        <Box className="px-3 pb-3 pt-6 justify-center items-center">
           <Image
             source={{ uri: category.image_url }}
             style={{ width: "100%", height: 50 }}
@@ -137,10 +142,6 @@ export default CategoryShowScreen;
 const styles = StyleSheet.create({
   pagerView: {
     flex: 1,
-    //width: "100%",
-    //backgroundColor: "red",
-    // marginLeft: 20,
-    // marginRight: 20,
   },
   container: {
     flex: 1,

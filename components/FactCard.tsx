@@ -88,76 +88,84 @@ const FactCard = ({ fact }: { fact: Fact }) => {
   };
   return (
     <>
-      <Card className="w-full h-full">
-        <Text className="text-lg font-bold">{fact.title}</Text>
-        <Box style={{ flexGrow: 1, flexShrink: 1, height: "80%" }}>
-          <Text>{fact.content}</Text>
-        </Box>
-        <Box className="flex-row justify-between">
-          <Box className="flex-row gap-2">
+      <Card
+        className="w-full h-full p-3 shadow-sm rounded-lg"
+        style={{ backgroundColor: fact.color }}
+      >
+        <Card className="w-full h-full">
+          <Text className="text-lg font-bold">{fact.title}</Text>
+          <Box style={{ flexGrow: 1, flexShrink: 1, height: "80%" }}>
+            <Text>{fact.content}</Text>
+          </Box>
+          <Box className="flex-row justify-between">
+            <Box className="flex-row gap-2">
+              <Button
+                variant="outline"
+                className={!user ? "bg-gray-200 opacity-50" : ""}
+                size="md"
+                onPress={function () {
+                  if (user) {
+                    voteStatus == "upvoted"
+                      ? handleUnvote(fact.id)
+                      : handleUpvote(fact.id);
+                  } else {
+                    setShowAlertDialog(true);
+                  }
+                }}
+              >
+                <ButtonIcon
+                  as={ThumbsUp}
+                  className={
+                    voteStatus == "upvoted" ? " text-blue-500" : "text-black"
+                  }
+                />
+              </Button>
+              <Button
+                variant="outline"
+                size="md"
+                className={!user ? "bg-gray-200 opacity-50" : ""}
+                onPress={() => {
+                  if (user) {
+                    voteStatus == "downvoted"
+                      ? handleUnvote(fact.id)
+                      : handleDownvote(fact.id);
+                  } else {
+                    setShowAlertDialog(true);
+                  }
+                }}
+              >
+                <ButtonIcon
+                  as={ThumbsDown}
+                  className={
+                    voteStatus == "downvoted" ? " text-red-500" : "text-black"
+                  }
+                />
+              </Button>
+            </Box>
+
             <Button
               variant="outline"
-              size="md"
-              onPress={function () {
-                if (user) {
-                  voteStatus == "upvoted"
-                    ? handleUnvote(fact.id)
-                    : handleUpvote(fact.id);
-                } else {
-                  setShowAlertDialog(true);
-                }
-              }}
-            >
-              <ButtonIcon
-                as={ThumbsUp}
-                className={
-                  voteStatus == "upvoted" ? " text-blue-500" : "text-black"
-                }
-              />
-            </Button>
-            <Button
-              variant="outline"
-              size="md"
+              className={!user ? "bg-gray-200 opacity-50" : ""}
               onPress={() => {
                 if (user) {
-                  voteStatus == "downvoted"
-                    ? handleUnvote(fact.id)
-                    : handleDownvote(fact.id);
+                  handleToggleBookmark(fact.id);
                 } else {
                   setShowAlertDialog(true);
                 }
               }}
+              size="md"
             >
               <ButtonIcon
-                as={ThumbsDown}
+                as={Bookmark}
                 className={
-                  voteStatus == "downvoted" ? " text-red-500" : "text-black"
+                  bookmarkStatus
+                    ? "fill-purple-500 text-purple-500"
+                    : "text-black"
                 }
               />
             </Button>
           </Box>
-
-          <Button
-            variant="outline"
-            onPress={() => {
-              if (user) {
-                handleToggleBookmark(fact.id);
-              } else {
-                setShowAlertDialog(true);
-              }
-            }}
-            size="md"
-          >
-            <ButtonIcon
-              as={Bookmark}
-              className={
-                bookmarkStatus
-                  ? "fill-purple-500 text-purple-500"
-                  : "text-black"
-              }
-            />
-          </Button>
-        </Box>
+        </Card>
       </Card>
       <AlertDialog isOpen={showAlertDialog} onClose={handleClose} size="md">
         <AlertDialogBackdrop />

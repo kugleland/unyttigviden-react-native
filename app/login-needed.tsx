@@ -25,7 +25,7 @@ const LoginNeededScreen = () => {
         <Box className="flex-1 h-full justify-center items-center p-6 mb-16">
           <Text>Login nødvendig</Text>
           <Button onPress={() => router.replace("/login")}>
-            <ButtonText>Login</ButtonText>
+            <ButtonText>Log ind</ButtonText>
           </Button>
         </Box>
       </View>

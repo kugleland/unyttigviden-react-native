@@ -2,13 +2,18 @@
 
 import { Stack } from "expo-router";
 import { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import FactCard from "@/components/FactCard";
 import { useLocalSearchParams } from "expo-router";
 import { Box } from "@/components/ui/box";
 import { Fact } from "@/types/fact";
 import { Image } from "expo-image";
+import { Button, ButtonText } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react-native";
+import { ButtonIcon } from "@/components/ui/button";
+import { useRouter } from "expo-router";
 const ShowFactScreen = () => {
+  const router = useRouter();
   const {
     factId,
     title,
@@ -16,6 +21,7 @@ const ShowFactScreen = () => {
     category_image_url,
     user_vote,
     user_bookmark,
+    color,
   } = useLocalSearchParams();
 
   const fact: Fact = {
@@ -27,7 +33,7 @@ const ShowFactScreen = () => {
     user_bookmark: user_bookmark as unknown as boolean,
     category_title: "",
     icon: "",
-    color: "",
+    color: color as string,
   };
 
   return (
@@ -41,8 +47,14 @@ const ShowFactScreen = () => {
             contentFit="contain"
           />
         </Box>
-        <Box className="flex-1 h-full justify-center items-center p-6 mb-16">
+        <Box className="flex-1 h-full justify-center items-center p-6 mb-12">
           <FactCard fact={fact} />
+        </Box>
+        <Box className="p-3 mb-24 flex-row justify-center items-center gap-3">
+          <Button onPress={() => router.back()}>
+            <ButtonIcon as={ArrowLeft} />
+            <ButtonText>Tilbage</ButtonText>
+          </Button>
         </Box>
       </View>
     </>

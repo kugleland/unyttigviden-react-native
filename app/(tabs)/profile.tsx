@@ -29,24 +29,29 @@ export default function ProfileScreen() {
 
   return (
     <Box className="flex-1 items-center justify-center p-3">
-      <Card className="items-center justify-center p-6 mb-6 w-full">
-        <Avatar size="lg" className="mb-3">
-          {user?.profile_image_url ? (
-            <AvatarImage
-              source={{
-                uri: user.profile_image_url,
-              }}
-            />
-          ) : (
-            <AvatarFallbackText>{user?.name}</AvatarFallbackText>
-          )}
-          <AvatarBadge />
-        </Avatar>
-        <Heading size="md" className="mb-1">
-          {user?.name}
-        </Heading>
-        <Text>{user?.email}</Text>
-      </Card>
+      {user ? (
+        <Card className="items-center justify-center p-6 mb-6 w-full">
+          <Avatar size="lg" className="mb-3">
+            {user?.profile_image_url ? (
+              <AvatarImage
+                source={{
+                  uri: user.profile_image_url,
+                }}
+              />
+            ) : (
+              <AvatarFallbackText>{user?.name}</AvatarFallbackText>
+            )}
+          </Avatar>
+          <Heading size="md" className="mb-1">
+            {user?.name}
+          </Heading>
+          <Text>{user?.email}</Text>
+        </Card>
+      ) : (
+        <Card className="items-center justify-center p-6 mb-6 w-full">
+          <Text>Log ind eller opret en konto for at se din profil.</Text>
+        </Card>
+      )}
 
       {token ? (
         <Button
@@ -54,11 +59,11 @@ export default function ProfileScreen() {
             logout();
           }}
         >
-          <ButtonText>Logout</ButtonText>
+          <ButtonText>Log ud</ButtonText>
         </Button>
       ) : (
         <Button onPress={() => router.push("/(auth)/login")}>
-          <ButtonText>Login</ButtonText>
+          <ButtonText>Log ind</ButtonText>
         </Button>
       )}
     </Box>

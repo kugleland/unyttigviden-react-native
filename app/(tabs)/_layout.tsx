@@ -1,7 +1,7 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, router, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -12,15 +12,35 @@ import {
   UserIcon,
   CircleHelp,
   ArrowLeftIcon,
+  FileQuestion,
+  Icon,
 } from "lucide-react-native";
 import { Button } from "@/components/ui/button";
-
+import { Image } from "expo-image";
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
   return <FontAwesome size={24} style={{ marginBottom: -10 }} {...props} />;
+}
+
+function HeaderLogo() {
+  const colorScheme = useColorScheme();
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
+      {/* <Baby color={Colors[colorScheme ?? "light"].text} /> */}
+      <Image
+        source={require("@/assets/images/logo-wide.png")}
+        style={{ width: 150, height: 50 }}
+        contentFit="contain"
+      />
+      {/* <Bed color={Colors[colorScheme ?? "light"].text} /> */}
+      {/* <Text style={{ color: Colors[colorScheme ?? "light"].text }}>
+        Sovstrup
+      </Text> */}
+    </View>
+  );
 }
 
 export default function TabLayout() {
@@ -39,23 +59,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Unyttig Viden",
           tabBarIcon: ({ color }) => (
             <HomeIcon color={color} style={{ marginBottom: 5 }} />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
           ),
         }}
       />
@@ -85,7 +91,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="bookmarks"
         options={{
-          title: "Bookmarks",
+          title: "Gemte",
           tabBarIcon: ({ color }) => (
             <BookmarkIcon color={color} style={{ marginBottom: 5 }} />
           ),
@@ -94,7 +100,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: "Profil",
           tabBarIcon: ({ color }) => (
             <UserIcon color={color} style={{ marginBottom: 5 }} />
           ),

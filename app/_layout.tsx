@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 export {
@@ -68,11 +68,16 @@ function RootLayoutNav() {
           <Stack.Screen
             name="show-fact"
             options={{
-              presentation: "modal",
+              // presentation: "modal",
               headerShown: true,
               headerLeft: () => (
-                <Button onPress={() => router.back()}>
-                  <ArrowLeft color="white" />
+                <Button
+                  onPress={() => router.back()}
+                  size="sm"
+                  variant="outline"
+                >
+                  <ButtonIcon as={ArrowLeft} />
+                  <ButtonText>Tilbage</ButtonText>
                 </Button>
               ),
             }}
@@ -83,6 +88,10 @@ function RootLayoutNav() {
           />
           <Stack.Screen
             name="login-needed"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
+          <Stack.Screen
+            name="notifications"
             options={{ headerShown: false, presentation: "modal" }}
           />
         </Stack>
